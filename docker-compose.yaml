@@ -12,3 +12,18 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
+      DATABASE_URL: postgres://homestream:homestream@db:5432/homestream
+
+  db:
+    image: postgres:16-alpine
+    container_name: homestream-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: homestream
+      POSTGRES_PASSWORD: homestream
+      POSTGRES_DB: homestream
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

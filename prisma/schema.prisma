@@ -1,0 +1,27 @@
+// prisma/schema.prisma
+
+// 1) Generate the Prisma Client for TypeScript/Node
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 2) Database connection (Postgres, via env var)
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 3) Your first model: an Event log entry
+model Event {
+  id        String   @id @default(cuid())
+  type      String
+  payload   Json
+  createdAt DateTime @default(now())
+
+  // optional: where the event came from (UI, worker, etc.)
+  source    String?  @default("app")
+
+  // optional: a simple string field to group events
+  // e.g. "server.health", "user.login", "rule.triggered"
+  topic     String?  
+}

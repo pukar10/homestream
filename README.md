@@ -23,6 +23,21 @@ docker compose down
 
 Project should now be running on `app.pukarsubedi.com`
 
+## Milestones
+
+- [x] 0 - traffic from `app.pukarsubedi.com` to NextJS server
+    - [ ] - Cloudflare tunnel
+    - [ ] - Caddy reverse proxy
+    - [ ] - Compute VM in homelab
+- [x] 1 - Dockerize NextJS and deploy application via docker compose
+    - [ ] - Dockerfile
+    - [ ] - docker-compose.yaml
+    - [ ] - .dockerignore
+- [ ] 2 - Setup authentication 
+    - [ ] - postgres + _auth library_ + Prisma
+    - [ ] - Add tRPC to NextJS app, return user
+
+
 ## Learn More
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
