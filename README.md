@@ -19,6 +19,9 @@ docker compose logs -f
 
 # Stop app
 docker compose down
+
+# Run Prisma migration
+npx prisma migrate dev --name init
 ```
 
 Project should now be running on `app.pukarsubedi.com`
