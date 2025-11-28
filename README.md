@@ -12,8 +12,9 @@ docker run --rm -p 3000:3000 homestream
 
 # Start entire HomeStream application
 docker compose up -d
+docker compose ps
 
-# Show logs
+# Logs
 docker compose logs -f 
 
 # Stop app
