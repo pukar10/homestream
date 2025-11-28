@@ -2,9 +2,9 @@
 
 Traffic for `app.pukarsubedi.com` goes through a Cloudflare tunnel to a Caddy reverse proxy which forwards traffic to a compute VM hosted in my Homelab running the NextJS server on port 3000.
 
-## Get started
+## Local Dev
 
-Start NextJS project
+### Homestream
 
 ```bash
 # Start NextJS container
@@ -22,6 +22,53 @@ docker compose down
 ```
 
 Project should now be running on `app.pukarsubedi.com`
+
+### Prisma
+
+_ORM & migration tool_
+
+_Schema:_ Apply new migration to bring current schema in line with `schema.prisma`, record change as `init_auth`
+```bash
+npx prisma migrate dev --name init_auth
+```
+
+_Data:_ Regenerate Prisma Client code from `schema.prisma` so your application can use the latest typed API to access the database.
+```bash
+npx prisma generate
+
+# Now you can use PrismaClient to change data in the DB
+import { PrismaClient } from "@prisma/client";
+```
+
+#### Singleton PrismaClient
+
+Create a single shared PrismaClient _cached_ to `globalThis` so hot-reloading does not keep creating new clients and postgres connections. Only Dev.
+```ts
+import { PrismaClient } from "@prisma/client";
+
+/*
+1. Tell TypeScript that in Node's global scope, we might store prisma as either PrismaClient or undefined. 
+Makes globalThis.prisma type-safe
+*/
+declare global {
+  var prisma: PrismaClient | undefined;
+}
+
+// 2. Create a single PrismaClient instance, or reuse the existing one in dev
+const prismaClient =
+  globalThis.prisma ??
+  new PrismaClient({
+    log: ["error", "warn"],
+  });
+
+// 3. In development, store the client on `globalThis` so it survives hot reloads
+if (process.env.NODE_ENV !== "production") {
+  globalThis.prisma = prismaClient;
+}
+
+// 4. Export the shared client for the rest of the app to use
+export const prisma = prismaClient;
+```
 
 ## Milestones
 
