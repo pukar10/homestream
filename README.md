@@ -2,22 +2,25 @@
 
 Traffic for `app.pukarsubedi.com` goes through a Cloudflare tunnel to a Caddy reverse proxy which forwards traffic to a compute VM hosted in my Homelab running the NextJS server on port 3000.
 
+* Docker compose used to orchestrate containers.
+* Postgres used for DB.
+* Prisma used as ORM and db migration tool for DB.
+
 ## Local Dev
 
 ### Homestream
 
 ```bash
-# Start NextJS container
-docker run --rm -p 3000:3000 homestream
-
-# Start entire HomeStream application
+# Start App (prod)
 docker compose up -d
-docker compose ps
 
-# Logs
-docker compose logs -f 
+# Only NextJS web server (dev)
+npm run dev
 
-# Stop app
+# Only Postgres DB
+docker compose up -d db
+
+# Stop App
 docker compose down
 ```
 
