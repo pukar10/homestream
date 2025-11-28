@@ -19,9 +19,6 @@ docker compose logs -f
 
 # Stop app
 docker compose down
-
-# Run Prisma migration
-npx prisma migrate dev --name init
 ```
 
 Project should now be running on `app.pukarsubedi.com`
@@ -37,7 +34,7 @@ Project should now be running on `app.pukarsubedi.com`
     - [ ] - docker-compose.yaml
     - [ ] - .dockerignore
 - [ ] 2 - Setup authentication 
-    - [ ] - postgres + _auth library_ + Prisma
+    - [ ] - postgres + _auth library_ + data migration
     - [ ] - Add tRPC to NextJS app, return user
 
 
