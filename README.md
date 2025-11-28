@@ -7,7 +7,17 @@ Traffic for `app.pukarsubedi.com` goes through a Cloudflare tunnel to a Caddy re
 Start NextJS project
 
 ```bash
+# Start NextJS container
 docker run --rm -p 3000:3000 homestream
+
+# Start entire HomeStream application
+docker compose up -d
+
+# Show logs
+docker compose logs -f 
+
+# Stop app
+docker compose down
 ```
 
 Project should now be running on `app.pukarsubedi.com`

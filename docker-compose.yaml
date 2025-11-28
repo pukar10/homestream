@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  web:
+    image: homestream
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: homestream
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
