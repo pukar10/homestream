@@ -30,11 +30,16 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# Env files / secrets
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+# keep a template:
+!.env.example
 
 # vercel
-.vercel
+.vercel/
 
 # typescript
 *.tsbuildinfo
@@ -47,3 +52,10 @@ next-env.d.ts
 # Prisma
 .env
 /app/generated/prisma
+# Regnerate if needed
+src/generated/
+
+# Node
+node_modules/
+npm-debug.log*
+package-lock.json
