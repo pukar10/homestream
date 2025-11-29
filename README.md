@@ -12,7 +12,7 @@ Traffic for `app.pukarsubedi.com` goes through a Cloudflare tunnel to a Caddy re
 
 ```bash
 # Start App (prod)
-docker compose up -d
+docker compose up -d 
 
 # Only NextJS web server (dev)
 npm run dev
