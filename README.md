@@ -2,16 +2,18 @@
 
 Traffic for `app.pukarsubedi.com` goes through a Cloudflare tunnel to a Caddy reverse proxy which forwards traffic to a compute VM hosted in my Homelab running the NextJS server on port 3000.
 
+```yaml
+# Stack
 * Docker compose
 * Postgres
 * Prisma (ORM and db migration tool)
 * tRPC
 
-```yaml
 # Flow
 Frontend → tRPC client function → tRPC appRouter → server procedure (Prisma/Postgres) -> returns to tRPC appRouter → returns to tRPC client → returns to Frontend
 ```
-* appRouter creates a context (user, session, etc) object that gets sent with request to server procedure.
+
+* appRouter creates a context (user, session, etc) object that gets sent with each request to server procedure.
 <br><br>
 
 ## 👨‍💻 Local Dev
