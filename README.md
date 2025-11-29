@@ -1,14 +1,17 @@
-# HomeStream
+# 🌊 HomeStream
 
 Traffic for `app.pukarsubedi.com` goes through a Cloudflare tunnel to a Caddy reverse proxy which forwards traffic to a compute VM hosted in my Homelab running the NextJS server on port 3000.
 
-* Docker compose used to orchestrate containers.
-* Postgres used for DB.
-* Prisma used as ORM and db migration tool for DB.
+* Docker compose
+* Postgres
+* Prisma (ORM and db migration tool)
+* tRPC
 
-## Local Dev
+```yaml
+Frontend → tRPC function → server function (Prisma to interact with Postgres) → returns to tRPC server → returns to tRPC client → Frontend
+```
 
-### Homestream
+## 👨‍💻 Local Dev
 
 ```bash
 # Start App (prod)
@@ -25,6 +28,7 @@ docker compose down
 ```
 
 Project should now be running on `app.pukarsubedi.com`
+<br><br>
 
 ### Prisma
 
@@ -72,8 +76,9 @@ if (process.env.NODE_ENV !== "production") {
 // 4. Export the shared client for the rest of the app to use
 export const prisma = prismaClient;
 ```
+<br><br>
 
-## Milestones
+## ✅ Milestones
 
 - [x] 0 - traffic from `app.pukarsubedi.com` to NextJS server
     - [ ] - Cloudflare tunnel
@@ -86,9 +91,9 @@ export const prisma = prismaClient;
 - [ ] 2 - Setup authentication 
     - [ ] - postgres + _auth library_ + data migration
     - [ ] - Add tRPC to NextJS app, return user
+<br><br>
 
-
-## Learn More
+## 🔍 Learn More
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
@@ -98,8 +103,9 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+<br><br>
 
-## Deploy on Vercel
+## 🚀 Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
