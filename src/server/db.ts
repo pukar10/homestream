@@ -1,18 +1,30 @@
 import { PrismaClient } from "../generated/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 
-// Store prisma as either PrismaClient or undefined. Makes globalThis.prisma type-safe.
+// 1. Store prisma as either PrismaClient or undefined. Makes globalThis.prisma type-safe.
 declare global {
   var prisma: PrismaClient | undefined;
 }
 
-// Create a single PrismaClient instance, or reuse the existing one in dev
+// 2. Create a pg connection pool using your DATABASE_URL
+//    This URL should be set in .env (for dev) and in your deployment env.
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
+// 3. Wrap the pg pool with Prisma's Postgres adapter
+const adapter = new PrismaPg(pool);
+
+// 4. Create or reuse a single PrismaClient instance
 const prismaClient =
   globalThis.prisma ??
   new PrismaClient({
+    adapter,
     log: ["error", "warn"],
   });
 
-// In development, store the client on `globalThis` so it survives hot reloads
+// 5. In dev, store the client on globalThis to survive hot-reloads
 if (process.env.NODE_ENV !== "production") {
   globalThis.prisma = prismaClient;
 }
