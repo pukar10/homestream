@@ -8,7 +8,8 @@ Traffic for `app.pukarsubedi.com` goes through a Cloudflare tunnel to a Caddy re
 * tRPC
 
 ```yaml
-Frontend → tRPC function → server function (Prisma to interact with Postgres) → returns to tRPC server → returns to tRPC client → Frontend
+# Flow
+Frontend → tRPC client function → tRPC appRouter → server procedure (Prisma/Postgres) -> returns to tRPC appRouter → returns to tRPC client → returns to Frontend
 ```
 
 ## 👨‍💻 Local Dev
