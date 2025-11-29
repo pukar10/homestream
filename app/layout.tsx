@@ -1,9 +1,6 @@
-// app/layout.tsx
-import type { ReactNode } from "react";
-import "./globals.css";
-import { TrpcProvider } from "@/client/TrpcProvider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,16 +19,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: ReactNode;
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* tRPC + React Query providers, available to the whole app */}
-        <TrpcProvider>{children}</TrpcProvider>
+        {children}
       </body>
     </html>
   );
