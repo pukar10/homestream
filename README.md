@@ -58,15 +58,21 @@ import { PrismaClient } from "src/generated/prisma/client";
 
 Create a single shared PrismaClient _cached_ to `globalThis` so hot-reloading does not keep creating new clients and postgres connections. Only Dev.
 ```ts
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 
-/*
-1. Tell TypeScript that in Node's global scope, we might store prisma as either PrismaClient or undefined. 
-Makes globalThis.prisma type-safe
-*/
+// 1. Node's global scope, store prisma as either PrismaClient or undefined. This Makes globalThis.prisma type-safe
 declare global {
   var prisma: PrismaClient | undefined;
 }
+
+// 2. Creates pg connection pool & and wrap with Prisma's Postgres adapter
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
+const adapter = new PrismaPg(pool);
 
 // 2. Create a single PrismaClient instance, or reuse the existing one in dev
 const prismaClient =

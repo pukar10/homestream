@@ -7,13 +7,11 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
-// Create a pg connection pool using your DATABASE_URL
-//    This URL should be set in .env (for dev) and in your deployment env.
+// Creates pg connection pool & and wrap with Prisma's Postgres adapter
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL
 });
 
-// Wrap the pg pool with Prisma's Postgres adapter
 const adapter = new PrismaPg(pool);
 
 // Create or reuse a single PrismaClient instance
@@ -24,7 +22,7 @@ const prismaClient =
     log: ["error", "warn"],
   });
 
-// In dev, store the client on globalThis to survive hot-reloads
+// In dev, store the client in globalThis to survive hot-reloads
 if (process.env.NODE_ENV !== "production") {
   globalThis.prisma = prismaClient;
 }
