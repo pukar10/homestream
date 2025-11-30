@@ -1,5 +1,7 @@
 # 🌊 HomeStream
 
+Modern TypeScript full-stack with tRPC + Prisma + Postgres, using async request/response between frontend and backend
+
 Traffic for `app.pukarsubedi.com` goes through a Cloudflare tunnel to a Caddy reverse proxy which forwards traffic to a compute VM hosted in my Homelab running the NextJS server on port 3000.
 
 ```yaml
