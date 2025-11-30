@@ -4,7 +4,7 @@ import { Pool } from "pg";
 
 // Makes globalThis.prisma type-safe
 declare global {
-  var prisma: PrismaClient | undefined;
+  var prismaClientShared: PrismaClient | undefined;
 }
 
 // Creates pg connection pool & and wrap with Prisma's Postgres adapter
@@ -16,7 +16,7 @@ const adapter = new PrismaPg(pool);
 
 // Create or reuse a single PrismaClient instance
 const prismaClient =
-  globalThis.prisma ??
+  globalThis.prismaClientShared ??
   new PrismaClient({
     adapter,
     log: ["error", "warn"],
@@ -24,8 +24,8 @@ const prismaClient =
 
 // In dev, store the client in globalThis to survive hot-reloads
 if (process.env.NODE_ENV !== "production") {
-  globalThis.prisma = prismaClient;
+  globalThis.prismaClientShared = prismaClient;
 }
 
 // Export the shared client for the rest of the app to use
-export const prisma = prismaClient;
+export const prismaClientShared = prismaClient;
