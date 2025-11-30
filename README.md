@@ -32,9 +32,9 @@ docker compose up -d db
 
 # Stop App
 docker compose down
-```
 
-Project should now be running on `app.pukarsubedi.com`
+# Ensure Prisma Client is generated and Postgres is running
+```
 <br><br>
 
 ### Prisma
