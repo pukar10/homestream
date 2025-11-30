@@ -62,7 +62,7 @@ import { PrismaClient } from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
-// Node's global scope, store prisma as either PrismaClient or undefined. This Makes globalThis.prisma type-safe
+// Makes globalThis.prisma type-safe
 declare global {
   var prisma: PrismaClient | undefined;
 }
