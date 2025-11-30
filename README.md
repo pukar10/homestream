@@ -56,39 +56,7 @@ import { PrismaClient } from "src/generated/prisma/client";
 
 #### Singleton PrismaClient
 
-Create a single shared PrismaClient _cached_ to `globalThis` so hot-reloading does not keep creating new clients and postgres connections. Only Dev.
-```ts
-import { PrismaClient } from "../generated/prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { Pool } from "pg";
-
-// Makes globalThis.prisma type-safe
-declare global {
-  var prisma: PrismaClient | undefined;
-}
-
-// Creates pg connection pool & and wrap with Prisma's Postgres adapter
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
-
-const adapter = new PrismaPg(pool);
-
-// Create a single PrismaClient instance, or reuse the existing one in dev
-const prismaClient =
-  globalThis.prisma ??
-  new PrismaClient({
-    log: ["error", "warn"],
-  });
-
-// In development, store the client on `globalThis` so it survives hot reloads
-if (process.env.NODE_ENV !== "production") {
-  globalThis.prisma = prismaClient;
-}
-
-// Export the shared client for the rest of the app to use
-export const prisma = prismaClient;
-```
+`/src/server/db.ts` - Creates a single shared PrismaClient _cached_ to `globalThis` so hot-reloading does not keep creating new clients and postgres connections on every code change. Only Dev.
 <br><br>
 
 ## ✅ Milestones
