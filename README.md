@@ -51,7 +51,7 @@ _Data:_ Regenerate Prisma Client code from `schema.prisma` so your application c
 npx prisma generate
 
 # Now you can use PrismaClient to change data in the DB
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../generated/prisma/client";
 ```
 
 #### Singleton PrismaClient
