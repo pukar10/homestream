@@ -1,6 +1,6 @@
 // server/trpc/routers/user.ts
 
-import { router, publicProcedure } from "../index";
+import { router, protectedProcedure } from "../index";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
@@ -11,13 +11,9 @@ const userSelect = {
 } as const;
 
 export const userRouter = router({
-  /**
-   * Get a list of users.
-   * 
-   * Right now this is "public" (no auth), but later you can
-   * switch this to a protectedProcedure when you add auth.
-   */
-  list: publicProcedure.query(async ({ ctx }) => {
+
+  // Get a list of users.
+  list: protectedProcedure.query(async ({ ctx }) => {
     const users = await ctx.prismaClientShared.user.findMany({
       select: userSelect,
       orderBy: { createdAt: "desc" },
@@ -34,7 +30,7 @@ export const userRouter = router({
    * 3) Throw NOT_FOUND if no user
    * 4) Return safe fields only
    */
-  byId: publicProcedure
+  byId: protectedProcedure
     .input(
       z.object({
         id: z.string(), // you can tighten this (e.g. .cuid()) if your id uses cuid()
