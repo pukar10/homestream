@@ -1,8 +1,15 @@
 // server/context.ts
 
 import { prismaClientShared } from "./prismaClientShared";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth/options";
+import type { NextRequest } from "next/server";
 
-export async function createContext() {
+type CreateContextOptions = {
+  req: Request;
+};
+
+export async function createContext({ req }: CreateContextOptions) {
   const session = null;
   const user = null;
 
@@ -10,6 +17,7 @@ export async function createContext() {
     prismaClientShared,
     session, 
     user,
+    req,
   };
 }
 
