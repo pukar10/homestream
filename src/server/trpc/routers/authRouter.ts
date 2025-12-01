@@ -1,6 +1,6 @@
 // server/trpc/routers/auth.ts
 
-import { router, publicProcedure } from "../index";
+import { router, publicProcedure, protectedProcedure } from "../index";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
@@ -16,16 +16,8 @@ export const authRouter = router({
     health: publicProcedure.query(() => {
         return { status: "ok" };
     }),
-
-    /**
-     * Register a new user with email + password.
-     *
-     * 1) Validate input with zod
-     * 2) Check if email already exists
-     * 3) Hash password
-     * 4) Create user in Postgres via Prisma
-     * 5) Return safe user data (no password)
-     */
+    
+    //Register a new user with email + password.
     register: publicProcedure
         .input(
             z.object({
@@ -71,7 +63,7 @@ export const authRouter = router({
      * 3) Compare password with stored hash
      * 4) Return safe user data if valid
      *
-     * (Session/JWT handling would be another step on top of this.)
+     * (no real session yet, just checks credentials)
      */
     login: publicProcedure
         .input(
@@ -105,8 +97,16 @@ export const authRouter = router({
                 });
             }
 
-            // 3) Return safe user data (no hash)
+            // Right now we just return the safe user
+            // Later create a session / cookie / JWT here.
             const { passwordHash, ...safeUser } = user;
             return safeUser;
         }),
+
+    me: protectedProcedure.query(async ({ ctx }) => {
+        if(!ctx.user) {
+            throw new TRPCError({ code: "UNAUTHORIZED" });
+        }
+        return ctx.user;
+    }),
 });
