@@ -3,7 +3,14 @@
 import { prismaClientShared } from "./prismaClientShared";
 
 export async function createContext() {
-  return { prismaClientShared };
+  const session = null;
+  const user = null;
+
+  return { 
+    prismaClientShared,
+    session, 
+    user,
+  };
 }
 
 export type Context = Awaited<ReturnType<typeof createContext>>;
