@@ -43,6 +43,7 @@ _ORM & migration tool_
 
 _Schema:_ Apply new migration to bring current schema in line with `schema.prisma`, record change as `init_auth`
 ```bash
+# Apply schema
 npx prisma migrate dev --name init_auth
 ```
 
