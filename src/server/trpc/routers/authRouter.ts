@@ -21,7 +21,7 @@ export const authRouter = router({
     register: publicProcedure
         .input(
             z.object({
-                email: z.email(),
+                email: z.string().email(),
                 password: z.string().min(8, "Password must be at least 8 characters"),
             }),
         )
@@ -68,7 +68,7 @@ export const authRouter = router({
     login: publicProcedure
         .input(
             z.object({
-                email: z.email(),
+                email: z.string().email(),
                 password: z.string().min(1, "Password is required"),
             }),
         )

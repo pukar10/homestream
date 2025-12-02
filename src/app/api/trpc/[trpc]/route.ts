@@ -1,4 +1,4 @@
-// app/api/trpc/route.ts
+// src/app/api/trpc/route.ts
 
 import { appRouter } from "@/src/server/trpc/routers/_appRouter";
 import { createContext } from "@/src/server/context";
@@ -9,7 +9,7 @@ const handler = (req: Request) =>
     endpoint: "/api/trpc",
     req,
     router: appRouter,
-    createContext: (opts) => createContext({ req }),
+    createContext: () => createContext({ req }),
   });
 
 export { handler as GET, handler as POST };

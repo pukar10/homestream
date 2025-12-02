@@ -1,4 +1,5 @@
-// server/trpc/routers/appRouter.ts
+// src/server/trpc/routers/_appRouter.ts
+
 import { router } from "../index";
 import { authRouter } from "./authRouter";
 import { userRouter } from "./userRouter";
